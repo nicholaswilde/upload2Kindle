@@ -1,0 +1,19 @@
+upload2Kindle
+=============
+
+WARNING:
+--------
+upload2Kindle uses tls to email the file using gmail which is insecure.  Also your gmail password is stored in plain text.
+
+Blurb:
+------
+Easily upload files to your Amazon Kindle via Whispernet using your Send-to-Kindle e-mail address.
+
+Description:
+------------
+upload2Kindle uses the sendEmail command line SMTP email client to email a personal document or book to a Send-to-Kindle email address <'user'@free.kindle.com>
+
+Requirements:
+-------------
+ - sendEmail version 1.56-2
+

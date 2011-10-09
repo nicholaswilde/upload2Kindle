@@ -1,0 +1,47 @@
+#!/bin/bash
+# TITLE: upload2Kindle
+#
+# DESCRIPTION: Easily upload documents to your Kindle via Whispernet.
+# AUTHOR: Voltron43
+# VERSION: 0.1
+#
+# WARNING: upload2Kindle uses tls to email the file using gmail which is insecure.
+# Also your gmail password is stored in plain text.
+
+# Variables
+gmailUsername=""
+gmailPassword=""
+kindleUsername=""
+
+# Store the first parameter in a variable
+file=$1
+
+# Get the file extension and converter it to upper case
+ext=$(echo ${file##*.} | tr '[:lower:]' '[:upper:]')
+string="DOC HTML HTM RTF JPEG JPG GIF PNG BMP PDF DOCX AZW AZW1 TXT MOBI PRC AA AAX MP3"
+
+# Check to see if the file extension is an valid Amazon extension
+if [[ ! $string =~ .*$ext.* ]]; then
+  echo "Invalid extension $ext"
+  exit 1
+fi
+
+# Email the file if it exists
+if [ -e $file ]; then
+  echo "Sending email..."
+  sendEmail \
+    -f $gmailUsername"@gmail.com" \
+    -t $kindleUsername"@free.kindle.com" \
+    -u "Convert" \
+    -m "Convert" \
+    -s smtp.gmail.com:587 \
+    -xu "$gmailUsername" \
+    -xp "$gmailPassword" \
+    -o tls=yes \
+    -a "$file"
+else
+  echo "$file"" does not exist"
+  exit 1
+fi
+
+exit 0
